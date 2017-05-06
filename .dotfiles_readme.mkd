@@ -1,0 +1,34 @@
+# dotfiles
+
+Allows us to maintain our dotfile configuration across multiple devices. Inspired by https://news.ycombinator.com/item?id=11071754, https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/, and https://github.com/Siilwyn/my-dotfiles
+
+
+## Install Git
+
+## Configuration
+``bash
+alias cfg='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+cfg config status.showUntrackedFiles no
+``
+
+## Setup
+``bash
+git init --bare $HOME/.dotfiles
+cfg remote add origin git@github.com:pdailey/dotfiles.git
+``
+
+
+## Usage
+``bash
+cfg status
+cfg add .gitconfig
+cfg commit -m 'Add gitconfig'
+cfg push
+``
+
+## Replication
+``bash
+git clone --separate-git-dir=$HOME/.dotfiles https://github.com/pdailey/dotfiles.git dotfiles
+rsync --recursive --verbose --exclude '.git' dotfiles/ $HOME/
+rm --recursive dotfiles
+```
