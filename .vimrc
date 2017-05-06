@@ -1,63 +1,35 @@
-" Vim package manager {{{1
-" Replaces neobundle package manager
-"  ----------------------------------------------------------------------------
-" Required:
-set runtimepath^=/Users/peterdailey/.vim/bundle/repos/github.com/Shougo/dein.vim
+"
+" Setup vim plugins
+" :PlugInstall installs plugins
+" Specify directory for plugins
+call plug#begin('~/.local/share/nvim/plugged')
 
-" Required:
-call dein#begin(expand('/Users/peterdailey/.vim/bundle'))
+" Make sure you use single quotes
+" Shorthand notation;
+Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-abolish'
+Plug 'Raimondi/delimitMate'
+Plug 'terryma/vim-expand-region'
+Plug 'godlygeek/tabular'
+Plug 'chip/vim-fat-finger'
+Plug 'iCyMind/NeoSolarized'
 
-" Let dein manage dein
-" Required:
-call dein#add('Shougo/dein.vim')
+Plug 'Valloric/YouCompleteMe'
+Plug 'itchyny/vim-cursorword'
 
-" Add or remove your plugins here:
-" Text snippets
-" TODO: Get this to works one day..
-"call dein#add('valloric/youcompleteme')
+Plug 'scrooloose/nerdtree'
+"Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'airblade/vim-gitgutter'
 
-call dein#add('matze/vim-move')
+" On demand loading
+Plug 'shime/vim-livedown', { 'for': 'markdown'}
 
-" Change the surrounding text object
-call dein#add('tpope/vim-surround')
+Plug 'davidhalter/jedi-vim', { 'for': 'python'}
 
-" Allows some plugin commands to be repeated with .
-call dein#add('tpope/vim-repeat')
-
-" This plug-in provides automatic closing of quotes, parenthesis, brackets,
-" etc.
-call dein#add('Raimondi/delimitMate')
-
-" Working with variants of a word
-call dein#add('tpope/vim-abolish')
-
-" Expands visual selection.
-call dein#add('terryma/vim-expand-region')
-call dein#add('godlygeek/tabular')
-
-"Commonly misspelled words and their corrections
-call dein#add('chip/vim-fat-finger')
-
-" Open markdown in browser
-call dein#add('shime/vim-livedown')
-
-" Colorscheme
-call dein#add('vim-scripts/Solarized')
-
-" Required:
-call dein#end()
-
-" Required:
-syntax on
-filetype plugin indent on
-
-" If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
-
-"End dein Scripts-------------------------
-
+" Initialize plugin system
+call plug#end()
 
 "  ----------------------------------------------------------------------------
 " To be sorted {{{1
@@ -69,10 +41,17 @@ set showmatch           " highlight matching [{()}]
 
 
 " Solarized settings
-syntax enable
-let g:solarized_termtrans = 1
+colorscheme NeoSolarized
+set termguicolors
 set background=dark
-colorscheme solarized
+
+" NERDTree Settings
+" Open nerdtree automatically
+" open NERDTree with F2
+map <F2> :NERDTreeToggle<CR>
+
+" Close vim even if NERDTree is the only window open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Resize splits when window is resized
 au VimResized * exe "normal \<c-w>="
