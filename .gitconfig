@@ -1,0 +1,13 @@
+# This is Git's per-user configuration file.
+[core]
+
+[user]
+	name = pdailey
+	email = peteradailey@gmail.com
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[alias]
+  co = checkout
+  br = branch
