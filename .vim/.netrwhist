@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/peterdailey/.cups'
+let g:netrw_dirhist_2='/Users/peterdailey/jre'
+let g:netrw_dirhist_3='/Users/peterdailey/.oh-my-zsh'
+let g:netrw_dirhist_4='/Users/peterdailey/.vim/bundle/vim-airline/autoload'
+let g:netrw_dirhist_5='/Users/peterdailey/.vim/bundle/vim-airline/autoload/airline'
+let g:netrw_dirhist_6='/Users/peterdailey/.vim/bundle/vim-airline/autoload'
+let g:netrw_dirhist_7='/Users/peterdailey/.vim'
