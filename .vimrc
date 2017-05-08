@@ -17,11 +17,13 @@ Plug 'chip/vim-fat-finger'
 Plug 'iCyMind/NeoSolarized'
 
 Plug 'Valloric/YouCompleteMe'
-Plug 'itchyny/vim-cursorword'
+"Plug 'itchyny/vim-cursorword'
 
 Plug 'scrooloose/nerdtree'
 "Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
+
+Plug 'Chiel92/vim-autoformat'
 
 " On demand loading
 Plug 'shime/vim-livedown', { 'for': 'markdown'}
@@ -58,7 +60,7 @@ au VimResized * exe "normal \<c-w>="
 
 " Vim jumps to the last position when  reopening a file
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+        au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " Show context when scrolling vertically.
@@ -67,9 +69,9 @@ set scrolloff=5
 " ================ Persistent Undo ==================
 " Keep undo history across sessions, by storing in file.
 if has('persistent_undo')
-silent !mkdir ~/.vim/backups > /dev/null 2>&1
-set undodir=~/.vim/backups
-set undofile
+        silent !mkdir ~/.vim/backups > /dev/null 2>&1
+        set undodir=~/.vim/backups
+        set undofile
 endif
 
 " Spelling
@@ -134,8 +136,8 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " Mark the 80th column in editor
 if (exists('+colorcolumn'))
-   set colorcolumn=80
-   highlight ColorColumn ctermbg=8
+        set colorcolumn=80
+        highlight ColorColumn ctermbg=8
 endif
 
 " Backspace works in insert
@@ -189,6 +191,9 @@ nnoremap <Down> <C-w>j
 
 
 " ============== Plugins ==============
+" Autoformat
+au BufWrite * :Autoformat
+let g:formatter_yapf_style = 'pep8'
 
 " Tabularize
 " TODO: Tabularize has a lot more capabilities
@@ -197,15 +202,26 @@ inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
 " Align Tables. Calls Tabularize on use of pipe character.
 function! s:align()
-  let p = '^\s*|\s.*\s|\s*$'
-  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-    Tabularize/|/l1
-    normal! 0
-    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-  endif
+        let p = '^\s*|\s.*\s|\s*$'
+        if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+                let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+                let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+                Tabularize/|/l1
+                normal! 0
+                call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+        endif
 endfunction
+
+
+" Jedi
+" If set to '', they are not assigned
+let g:jedi#goto_command = ""
+let g:jedi#goto_assignments_command = ""
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "<leader>d"
+let g:jedi#usages_command = ""
+let g:jedi#completions_command = ""
+let g:jedi#rename_command = ""
 
 " ============== Arduino ==============
 autocmd BufNewFile,BufReadPost *.ino,*.pde set filetype=cpp
